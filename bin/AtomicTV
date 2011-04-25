@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby -rubygems
+
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'AtomicTV'))
+
+include AtomicTV
+
+def display_error(error)
+  $stderr.puts "! ERROR: #{error.human_message}"
+end
+
+ARGV.each do |path|
+  begin
+    file_path = Pathname.new(path)
+    metadata = TVDBEpisode.metadata_for_filename(file_path.basename)
+    tagger = AtomicParsleyTagger.new(file_path, metadata)
+    tagger.run
+    puts "* Tagged: #{file_path.basename}"
+  rescue AtomicParsleyTagger::AtomicParsleyUnavailable => error
+    display_error(error)
+    exit 1
+  rescue AtomicTVError => error
+    display_error(error)
+  end
+end
