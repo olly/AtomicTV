@@ -75,7 +75,7 @@ module AtomicTV
       metadata.with_loaded_posters do
         command =  %Q{#{self.class.executable} }
         command << %Q{"#{file_path}" }
-        # command << %Q{--overWrite } if 
+        command << %Q{--overWrite }
         command << %Q{--rDNSatom '#{cast_metadata}' name=iTunMOVI domain=com.apple.iTunes }
         metadata.posters.each do |poster|
           command << %Q{--artwork #{poster.path} }
