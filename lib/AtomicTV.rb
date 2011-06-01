@@ -1,6 +1,7 @@
+require 'fileutils'
 require 'open-uri'
 require 'pathname'
-require 'tempfile'
+require 'tmpdir'
 
 require 'plist'
 require 'tvdb_party'

@@ -80,9 +80,11 @@ module AtomicTV
     attr_reader :posters
     
     def with_loaded_posters
+      temporary_directory = Dir.mktmpdir
+      
       @posters = series.season_posters(episode.season_number, 'en').map do |poster|
         url = ArtworkBaseURL + poster.path
-        file = Tempfile.new('AtomicTV')
+        file = File.new(File.join(temporary_directory, File.basename(url)), 'w')
         file.write(open(url).read)
         file.close
         file
@@ -91,7 +93,7 @@ module AtomicTV
       yield
       
     ensure
-      @posters.each {|file| file.unlink}
+      FileUtils.rm_rf(temporary_directory)
       @posters = nil
     end
     
