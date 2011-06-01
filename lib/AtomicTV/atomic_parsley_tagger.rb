@@ -76,7 +76,7 @@ module AtomicTV
         command =  %Q{#{self.class.executable} }
         command << %Q{"#{file_path}" }
         command << %Q{--overWrite }
-        command << %Q{--rDNSatom '#{cast_metadata}' name=iTunMOVI domain=com.apple.iTunes }
+        command << %Q{--rDNSatom "#{escape_double_quotes(cast_metadata)}" name=iTunMOVI domain=com.apple.iTunes }
         metadata.posters.each do |poster|
           command << %Q{--artwork #{poster.path} }
         end
