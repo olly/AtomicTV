@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{AtomicTV}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Olly Legg"]
-  s.date = %q{2011-04-25}
+  s.date = %q{2011-06-01}
   s.description = %q{A command line tool to tag MP4 TV shows with metadata pulled from TheTVDB.com. It uses AtomicParsley to process the file.}
   s.email = %q{olly@51degrees.net}
   s.executables = ["AtomicTV"]
