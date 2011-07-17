@@ -1,6 +1,6 @@
 = AtomicTV
 
-Description goes here.
+A command line tool to tag MP4 TV shows with metadata pulled from TheTVDB.com. It uses AtomicParsley to process the file.
 
 == Contributing to AtomicTV
  
