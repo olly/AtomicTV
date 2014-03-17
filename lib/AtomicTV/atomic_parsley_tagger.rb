@@ -92,7 +92,7 @@ module AtomicTV
     attr_reader :file_path, :metadata
     
     def escape_double_quotes(str)
-      str.gsub('"', '\"')
+      str.to_s.gsub('"', '\"')
     end
     
   end
