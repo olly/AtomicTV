@@ -30,11 +30,11 @@ module AtomicTV
     end
     
     def description
-      episode.overview[0,255].gsub(/\.(.*)\Z/, '.')
+      episode.overview.to_s[0,255].gsub(/\.(.*)\Z/, '.')
     end
     
     def long_description
-      episode.overview
+      episode.overview.to_s
     end
     
     def tv_network
@@ -66,7 +66,7 @@ module AtomicTV
     end
     
     def actors
-      (series.actors.map {|a| a.name} + episode.guest_stars).uniq
+      (Array(series.actors).map {|a| a.name} + episode.guest_stars).uniq
     end
     
     def directors
@@ -82,14 +82,16 @@ module AtomicTV
     def with_loaded_posters
       temporary_directory = Dir.mktmpdir
       
-      @posters = series.season_posters(episode.season_number, 'en').map do |poster|
+      season_posters = series.season_posters(episode.season_number, 'en')
+      season_posters = series.posters('en') if season_posters.empty?
+      @posters = season_posters.map do |poster|
         url = ArtworkBaseURL + poster.path
         file = File.new(File.join(temporary_directory, File.basename(url)), 'w')
         file.write(open(url).read)
         file.close
         file
       end
-      
+
       yield
       
     ensure
