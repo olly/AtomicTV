@@ -3,21 +3,21 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 describe AtomicTV::EpisodeMetadata do
   
   let(:series) do
-    stub('Mock Series', 
+    double('Mock Series', 
       :name => 'House', :network => 'FOX',
       :genres => ['Drama'],
       :artwork => [
-        stub('Artwork 1', :path => 'seasons/12345-7-1.jpg'), 
-        stub('Artwork 2', :path => 'seasons/12345-7-2.jpg')],
+        double('Artwork 1', :path => 'seasons/12345-7-1.jpg'), 
+        double('Artwork 2', :path => 'seasons/12345-7-2.jpg')],
       :actors => [
-        stub('Actor 1', :name => 'Hugh Laurie'),
-        stub('Actor 2', :name => 'Olivia Wilde'),
-        stub('Actor 3', :name => 'Amber Tamblyn')]
+        double('Actor 1', :name => 'Hugh Laurie'),
+        double('Actor 2', :name => 'Olivia Wilde'),
+        double('Actor 3', :name => 'Amber Tamblyn')]
     )
   end
   
   let(:episode) do
-    stub('Mock Episode',
+    double('Mock Episode',
       :name => 'Last Temptation',
       :season_number => '7',
       :number => '19',
@@ -106,7 +106,7 @@ describe AtomicTV::EpisodeMetadata do
   context "with a missing air date" do
     
     before(:each) do
-      episode.stub!(:air_date).and_return(nil)
+      episode.stub(:air_date).and_return(nil)
     end
     
     it "should return nil for air_date" do
@@ -126,7 +126,7 @@ describe AtomicTV::EpisodeMetadata do
   describe "#tv_episode" do
     
     it "should format the episode number to two digits" do
-      episode.stub!(:number).and_return('2')
+      episode.stub(:number).and_return('2')
       metadata.tv_episode.should == '702'
     end
     

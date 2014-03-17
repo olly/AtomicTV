@@ -9,14 +9,14 @@ describe AtomicTV::TVDBEpisode do
     context "with a correct series, season and episode" do
       
       before(:each) do
-        @mock_parser = stub('Mock Parser', :series_name => 'The Wire', :season_number => 3, :episode_number => 6)
-        AtomicTV::FilenameParser.stub!(:parse).and_return(@mock_parser)
+        @mock_parser = double('Mock Parser', :series_name => 'The Wire', :season_number => 3, :episode_number => 6)
+        AtomicTV::FilenameParser.stub(:parse).and_return(@mock_parser)
         
-        @result1 = stub('Mock Search Result - 1', :[] => '123456789')
-        @result2 = stub('Mock Search Result - 2', :[] => '987654321')
-        @episode = stub('Mock Episode')
-        @mock_client = stub('Mock Client', :search => [@result1, @result2], :get_series_by_id => @result1, :get_episode => @episode)
-        AtomicTV::TVDBEpisode.stub!(:client).and_return(@mock_client)
+        @result1 = double('Mock Search Result - 1', :[] => '123456789')
+        @result2 = double('Mock Search Result - 2', :[] => '987654321')
+        @episode = double('Mock Episode')
+        @mock_client = double('Mock Client', :search => [@result1, @result2], :get_series_by_id => @result1, :get_episode => @episode)
+        AtomicTV::TVDBEpisode.stub(:client).and_return(@mock_client)
       end
       
       it "should search for the series using the name" do
@@ -49,8 +49,8 @@ describe AtomicTV::TVDBEpisode do
     context "with an unknown series" do
       
       before(:each) do
-        @mock_client = stub('Mock Client', :search => [])
-        AtomicTV::TVDBEpisode.stub!(:client).and_return(@mock_client)
+        @mock_client = double('Mock Client', :search => [])
+        AtomicTV::TVDBEpisode.stub(:client).and_return(@mock_client)
       end
       
       it "should raise an AtomicTV::TVDBEpisode::UnknownSeries error" do
@@ -72,9 +72,9 @@ describe AtomicTV::TVDBEpisode do
     context "with an unknown episode" do
       
       before(:each) do
-        @series = stub('Mock Series', :[] => '1234789', :name => 'The Wire')
-        @mock_client = stub('Mock Client', :search => [@series], :get_series_by_id => @series, :get_episode => nil)
-        AtomicTV::TVDBEpisode.stub!(:client).and_return(@mock_client)
+        @series = double('Mock Series', :[] => '1234789', :name => 'The Wire')
+        @mock_client = double('Mock Client', :search => [@series], :get_series_by_id => @series, :get_episode => nil)
+        AtomicTV::TVDBEpisode.stub(:client).and_return(@mock_client)
       end
       
       it "should raise an AtomicTV::TVDBEpisode::UnknownEpisode error" do

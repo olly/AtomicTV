@@ -5,15 +5,15 @@ describe AtomicTV::AtomicParsleyTagger do
   describe ".executable" do
     
     before(:each) do
-      stub!(:`).and_return('')
+      Kernel.stub(:`).and_return('')
     end
     
     context "with AtomicParsley installed" do
       
-      let(:executable_path) { stub(:executable? => true) }
+      let(:executable_path) { double(:executable? => true) }
       
       before(:each) do
-        Pathname.stub!(:new).and_return(executable_path)
+        Pathname.stub(:new).and_return(executable_path)
       end
       
       it "should return a pathname with executable's location" do
@@ -26,7 +26,7 @@ describe AtomicTV::AtomicParsleyTagger do
     context "without AtomicParsley installed" do
       
       before(:each) do
-        Pathname.stub!(:new).and_return(stub(:executable? => false))
+        Pathname.stub(:new).and_return(double(:executable? => false))
       end
       
       it "should raise a AtomicParsleyUnavailable error" do
@@ -41,10 +41,10 @@ describe AtomicTV::AtomicParsleyTagger do
   
   describe "#cast_metadata" do
     
-    let(:file_path) { stub(:exist? => true) }
+    let(:file_path) { double(:exist? => true) }
     
     let(:metadata) do
-      stub(
+      double(
         :actors => ['Actor 1', 'Actor 2'], 
         :directors => ['Director 1', 'Director 2'], 
         :writers => ['Writer 1', 'Writer 2']
